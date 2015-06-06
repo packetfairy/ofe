@@ -1,9 +1,8 @@
 # ofe
-So I was looking on Craigslist one night at job postings. And I saw this one, where these people had encoded their email address by:<ul>
-<li>gzipping the address</li>
-<li>base64 encoding the gzip data</li>
-<li>reversing the base64 string</li>
-</ul>
+So I was looking on Craigslist one night at job postings. And I saw this one, where these people had encoded their email address by:
+* gzipping the address
+* base64 encoding the gzip data
+* reversing the base64 string
 
 The idea being that you needed to be smart enough to run simple commands to get the email address back out.
 
