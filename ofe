@@ -1,0 +1,58 @@
+#!/usr/bin/python
+
+import sys
+import argparse
+import cddvault
+
+def init():
+    parser = argparse.ArgumentParser(description='''CDD Vault's fancificating
+                                                    string/data
+                                                    encoder/decoder''',
+                                     epilog='''you can also pipe data to the
+                                               script!''')
+    action = parser.add_mutually_exclusive_group(required=True)
+    action.add_argument('--decode', '-d', action='store_true',
+                        help='decode this data')
+    action.add_argument('--encode', '-e', action='store_true',
+                        help='encode this data')
+    contents = parser.add_mutually_exclusive_group()
+    contents.add_argument('--file', '-f', dest='filename', action='store',
+                          help='filename containing data to encode/decode')
+    contents.add_argument('--string', '-s', dest='string', action='store',
+                          help='simple text data to encode/decode')
+    return(parser.parse_args())
+
+
+def main():
+    options = init()
+    c = cddvault.emailobfuscator()
+    if options.filename:
+        try:
+            r = open(options.filename, 'r')
+            content = r.read()
+            r.close()
+        except IOError, e:
+            print('having trouble opening the file: %s' % options.filename)
+            print('please check your permissions ' +
+                  'and the file path and try again!')
+            print e
+            exit(0)
+    elif options.string:
+        content = options.string
+    else:
+        content = ''
+        for line in sys.stdin:
+            content += line
+    if options.encode:
+        print(c.ensecretify(content))
+    if options.decode:
+        print(c.desecretify(content))
+
+
+if __name__ == '__main__':
+    try:
+        main()
+    except KeyboardInterrupt:
+        print('ok, ok, sheesh.')
+
+
