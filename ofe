@@ -4,6 +4,7 @@ import sys
 import argparse
 import cddvault
 
+
 def init():
     parser = argparse.ArgumentParser(description='''CDD Vault's fancificating
                                                     string/data
